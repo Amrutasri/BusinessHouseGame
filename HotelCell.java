@@ -1,3 +1,7 @@
+package model;
+
+import model.Cell;
+
 public class HotelCell extends Cell {
 
     private int worth = 200;
@@ -5,23 +9,23 @@ public class HotelCell extends Cell {
     private String owner;
     private String transaction = "debit";
 
-    int getWorth() {
+    public int getWorth() {
         return worth;
     }
 
-    int getRent() {
+    public int getRent() {
         return rent;
     }
 
-    void setOwner(String owner) {
+    public void setOwner(String owner) {
         this.owner = owner;
     }
 
-    String getOwner() {
+    public String getOwner() {
         return owner;
     }
 
-    String getTransaction() {
+    public String getTransaction() {
         return transaction;
     }
 }

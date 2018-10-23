@@ -1,13 +1,17 @@
-public class TreasureCell extends Cell{
+package model;
+
+import model.Cell;
+
+public class TreasureCell extends Cell {
 
     private int value = 200;
     private String transaction = "credit";
 
-    int getValue() {
+    public int getValue() {
         return value;
     }
 
-    String getTransaction() {
+    public String getTransaction() {
         return transaction;
     }
 }

@@ -1,13 +1,17 @@
-public class EmptyCell extends Cell{
+package model;
+
+import model.Cell;
+
+public class EmptyCell extends Cell {
 
     private int cost = 0;
     private String transaction = "debit";
 
-    int getCost() {
+    public int getCost() {
         return cost;
     }
 
-    String getTransaction() {
+    public String getTransaction() {
         return transaction;
     }
 }

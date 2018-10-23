@@ -1,30 +1,32 @@
+package model;
+
 public class Player {
 
     private String name;
     private int money = 200;
     private int position = 0;
 
-    Player(String name) {
+    public Player(String name) {
         this.name = name;
     }
 
-    String getName() {
+    public String getName() {
         return name;
     }
 
-    int getMoney() {
+    public int getMoney() {
         return money;
     }
 
-    int getPosition() {
+    public int getPosition() {
         return position;
     }
 
-    void setPosition(int position) {
+    public void setPosition(int position) {
         this.position = position;
     }
 
-    void setMoney(int money) {
+    public void setMoney(int money) {
         this.money = money;
     }
 }

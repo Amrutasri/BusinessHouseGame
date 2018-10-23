@@ -1,13 +1,17 @@
-public class JailCell extends Cell{
+package model;
+
+import model.Cell;
+
+public class JailCell extends Cell {
 
     private int fine = 50;
     private String transaction = "debit";
 
-    int getFine() {
+    public int getFine() {
         return fine;
     }
 
-    String getTransaction() {
+    public String getTransaction() {
         return transaction;
     }
 }
