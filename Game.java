@@ -1,7 +1,4 @@
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Random;
+import java.util.*;
 
 public class Game {
 
@@ -20,13 +17,14 @@ public class Game {
             System.out.println("Game requires minimum of two players.");
         } else {
             char[] positionsOfBoard = gameBoard.getPositionsOfBoard();
+            HashMap<HotelCell,Integer> hotelsList = (HashMap<HotelCell, Integer>) gameBoard.getHotelsList();
             int countChances = 0, countPlayers = 0;
             while (countPlayers < numberOfPlayers) {
                 for (Player player : players) {
                     System.out.println("Player " + player.getName());
                     int currentPosition = player.getPosition();
                     System.out.println("Current position " + currentPosition);
-                    int nextPosition = currentPosition + dice();
+                    int nextPosition = currentPosition + randomDice();
                     System.out.println("Dice " + nextPosition);
                     if(nextPosition>=positionsOfBoard.length) {
                         nextPosition = nextPosition - positionsOfBoard.length;
@@ -64,24 +62,27 @@ public class Game {
                             break;
 
                         case 'H':
-                            HotelCell hotelCell = new HotelCell();
-                            if (Objects.equals(hotelCell.getOwner(),nullString)) {
-                                hotelCell.setOwner(player.getName());
-                                cost = hotelCell.getWorth();
-                                transaction = hotelCell.getTransaction();
-                                money = moneyTransaction(player.getMoney(), transaction, cost);
-                                player.setMoney(money);
-                            } else {
-                                String name = hotelCell.getOwner();
-                                cost = hotelCell.getRent();
-                                transaction = hotelCell.getTransaction();
-                                money = moneyTransaction(player.getMoney(), transaction, cost);
-                                player.setMoney(money);
-                                for (Player owner : players) {
-                                    if (owner.getName().equals(name)) {
-                                        transaction = "credit";
+                            for(Map.Entry<HotelCell,Integer> hotel : hotelsList.entrySet()) {
+                                if(hotel.getValue().equals(position)) {
+                                    if (hotel.getKey().getOwner().equals(nullString)) {
+                                        hotel.getKey().setOwner(player.getName());
+                                        cost = hotel.getKey().getWorth();
+                                        transaction = hotel.getKey().getTransaction();
                                         money = moneyTransaction(player.getMoney(), transaction, cost);
-                                        owner.setMoney(money);
+                                        player.setMoney(money);
+                                    } else {
+                                        String name = hotel.getKey().getOwner();
+                                        cost = hotel.getKey().getRent();
+                                        transaction = hotel.getKey().getTransaction();
+                                        money = moneyTransaction(player.getMoney(), transaction, cost);
+                                        player.setMoney(money);
+                                        for (Player owner : players) {
+                                            if (owner.getName().equals(name)) {
+                                                transaction = "credit";
+                                                money = moneyTransaction(player.getMoney(), transaction, cost);
+                                                owner.setMoney(money);
+                                            }
+                                        }
                                     }
                                 }
                             }
@@ -96,7 +97,15 @@ public class Game {
         output();
     }
 
-    private int dice() {
+    private int userDice() {
+        int minimum = 2, maximum = 12;
+        System.out.println("Enter any number between "+minimum+" and "+maximum+" : ");
+        Scanner scanner = new Scanner(System.in);
+        int input = scanner.nextInt();
+        return input;
+    }
+
+    private int randomDice() {
         int minimum = 2, maximum = 12;
         Random random = new Random();
         int output =  random.nextInt(maximum + 1 - minimum) + minimum;
